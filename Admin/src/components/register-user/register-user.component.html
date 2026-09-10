@@ -1,0 +1,72 @@
+<div class="user-wrapper">
+  <div class="user-card">
+
+    <h2 class="title">Create New User Account</h2>
+
+    <form [formGroup]="userForm" (ngSubmit)="submit()">
+
+      <!-- Full Name -->
+      <div class="input-group">
+        <div class="icon">👤</div>
+        <input type="text" formControlName="fullName" required />
+        <label>Full Name</label>
+        <span class="bar"></span>
+      </div>
+
+      <!-- Email -->
+      <div class="input-group">
+        <div class="icon">📧</div>
+        <input type="email" formControlName="email" required />
+        <label>Email</label>
+        <span class="bar"></span>
+      </div>
+
+      <!-- Password -->
+      <div class="input-group">
+        <div class="icon">🔒</div>
+        <input type="password" formControlName="password" required />
+        <label>Password</label>
+        <span class="bar"></span>
+      </div>
+
+      <!-- Age -->
+      <div class="input-group">
+        <div class="icon">📅</div>
+        <input type="number" formControlName="age" required />
+        <label>Age</label>
+        <span class="bar"></span>
+      </div>
+
+      <!-- Country -->
+      <div class="input-group">
+        <div class="icon">🌍</div>
+        <input type="text" formControlName="country" required />
+        <label>Country</label>
+        <span class="bar"></span>
+      </div>
+
+      <!-- Address -->
+      <div class="input-group">
+        <div class="icon">🏠</div>
+        <input type="text" formControlName="address" required />
+        <label>Address</label>
+        <span class="bar"></span>
+      </div>
+
+      <!-- Submit Button -->
+      <button 
+        type="submit" 
+        class="liquid-btn" 
+        [disabled]="userForm.invalid || loading">
+
+        <span>
+          {{ loading ? 'Creating...' : 'Create Account' }}
+        </span>
+
+        <div class="liquid"></div>
+      </button>
+
+    </form>
+
+  </div>
+</div>

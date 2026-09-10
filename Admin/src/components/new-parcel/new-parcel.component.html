@@ -1,0 +1,217 @@
+<!-- create-parcel.component.html -->
+<div class="min-h-screen bg-gray-900 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden animate-fadeIn">
+      <!-- Header -->
+      <div class="bg-gradient-to-r from-rose-400 to-rose-700 px-10 py-8">
+        <h2 class="text-4xl font-bold text-white flex items-center gap-3">
+          <i class="fas fa-box text-3xl"></i> Create New Parcel
+        </h2>
+        <p class="text-indigo-100 mt-2">Fill in the details to register a new shipment</p>
+      </div>
+
+      <app-toaster></app-toaster>
+      <!-- Form -->
+      <form [formGroup]="parcelForm" (ngSubmit)="onSubmit()" class="p-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Weight -->
+        <div class="group relative">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Weight <span class="text-red-500">*</span></label>
+          <div class="relative">
+            <i class="fas fa-weight-hanging absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors duration-300"></i>
+            <input
+              type="number"
+              formControlName="weight"
+              placeholder="20"
+              class="w-full pl-12 pr-4 py-4 bg-white/70 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-500/30 focus:border-indigo-600 transition-all duration-300 shadow-sm hover:shadow-md peer"
+            />
+          </div>
+          <span class="text-sm text-gray-500 mt-1 inline-block">grams</span>
+          <div class="mt-1 text-sm text-red-600 min-h-[1.25rem]" *ngIf="parcelForm.get('weight')?.invalid && (parcelForm.get('weight')?.dirty || parcelForm.get('weight')?.touched)">
+            <span *ngIf="parcelForm.get('weight')?.errors?.['required']">Weight is required.</span>
+            <span *ngIf="parcelForm.get('weight')?.errors?.['min']">Weight must be greater than 0.</span>
+          </div>
+        </div>
+
+        <!-- From -->
+        <div class="group relative">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">From <span class="text-red-500">*</span></label>
+          <div class="relative">
+            <i class="fas fa-map-marker-alt absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors duration-300"></i>
+            <input
+              type="text"
+              formControlName="from"
+              placeholder="Ontario, USA"
+              matInput
+              [matAutocomplete]="fromAuto"
+              class="w-full pl-12 pr-4 py-4 bg-white/70 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-500/30 focus:border-indigo-600 transition-all duration-300 shadow-sm hover:shadow-md peer"
+            />
+            <mat-autocomplete #fromAuto="matAutocomplete">
+              <mat-option *ngFor="let location of filteredFromLocations | async" [value]="location">
+                {{ location }}
+              </mat-option>
+            </mat-autocomplete>
+          </div>
+          <div class="mt-1 text-sm text-red-600 min-h-[1.25rem]" *ngIf="parcelForm.get('from')?.invalid && (parcelForm.get('from')?.dirty || parcelForm.get('from')?.touched)">
+            <span *ngIf="parcelForm.get('from')?.errors?.['required']">From location is required.</span>
+          </div>
+        </div>
+
+        <!-- To -->
+        <div class="group relative">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">To <span class="text-red-500">*</span></label>
+          <div class="relative">
+            <i class="fas fa-map-marker-alt absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors duration-300"></i>
+            <input
+              type="text"
+              formControlName="to"
+              placeholder="Saint Mary, USA"
+              matInput
+              [matAutocomplete]="toAuto"
+              class="w-full pl-12 pr-4 py-4 bg-white/70 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-500/30 focus:border-indigo-600 transition-all duration-300 shadow-sm hover:shadow-md peer"
+            />
+            <mat-autocomplete #toAuto="matAutocomplete">
+              <mat-option *ngFor="let location of filteredToLocations | async" [value]="location">
+                {{ location }}
+              </mat-option>
+            </mat-autocomplete>
+          </div>
+          <div class="mt-1 text-sm text-red-600 min-h-[1.25rem]" *ngIf="parcelForm.get('to')?.invalid && (parcelForm.get('to')?.dirty || parcelForm.get('to')?.touched)">
+            <span *ngIf="parcelForm.get('to')?.errors?.['required']">To location is required.</span>
+          </div>
+        </div>
+
+        <!-- Sender Name -->
+        <div class="group relative">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Sender Name <span class="text-red-500">*</span></label>
+          <div class="relative">
+            <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors duration-300"></i>
+            <input
+              type="text"
+              formControlName="senderName"
+              placeholder="John Doe"
+              class="w-full pl-12 pr-4 py-4 bg-white/70 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-500/30 focus:border-indigo-600 transition-all duration-300 shadow-sm hover:shadow-md peer"
+            />
+          </div>
+          <div class="mt-1 text-sm text-red-600 min-h-[1.25rem]" *ngIf="parcelForm.get('senderName')?.invalid && (parcelForm.get('senderName')?.dirty || parcelForm.get('senderName')?.touched)">
+            <span *ngIf="parcelForm.get('senderName')?.errors?.['required']">Sender name is required.</span>
+          </div>
+        </div>
+
+        <!-- Recipient Name -->
+        <div class="group relative">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Recipient Name <span class="text-red-500">*</span></label>
+          <div class="relative">
+            <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors duration-300"></i>
+            <input
+              type="text"
+              formControlName="recipientName"
+              placeholder="Jane Doe"
+              class="w-full pl-12 pr-4 py-4 bg-white/70 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-500/30 focus:border-indigo-600 transition-all duration-300 shadow-sm hover:shadow-md peer"
+            />
+          </div>
+          <div class="mt-1 text-sm text-red-600 min-h-[1.25rem]" *ngIf="parcelForm.get('recipientName')?.invalid && (parcelForm.get('recipientName')?.dirty || parcelForm.get('recipientName')?.touched)">
+            <span *ngIf="parcelForm.get('recipientName')?.errors?.['required']">Recipient name is required.</span>
+          </div>
+        </div>
+
+        <!-- Sender Email -->
+        <div class="group relative">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Sender Email <span class="text-red-500">*</span></label>
+          <div class="relative">
+            <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors duration-300"></i>
+            <input
+              type="email"
+              formControlName="senderEmail"
+              placeholder="sender@example.com"
+              class="w-full pl-12 pr-4 py-4 bg-white/70 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-500/30 focus:border-indigo-600 transition-all duration-300 shadow-sm hover:shadow-md peer"
+            />
+          </div>
+          <div class="mt-1 text-sm text-red-600 min-h-[1.25rem]" *ngIf="parcelForm.get('senderEmail')?.invalid && (parcelForm.get('senderEmail')?.dirty || parcelForm.get('senderEmail')?.touched)">
+            <span *ngIf="parcelForm.get('senderEmail')?.errors?.['required']">Sender email is required.</span>
+            <span *ngIf="parcelForm.get('senderEmail')?.errors?.['email']">Invalid email format.</span>
+          </div>
+        </div>
+
+        <!-- Recipient Email -->
+        <div class="group relative">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Recipient Email <span class="text-red-500">*</span></label>
+          <div class="relative">
+            <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors duration-300"></i>
+            <input
+              type="email"
+              formControlName="recipientEmail"
+              placeholder="recipient@example.com"
+              class="w-full pl-12 pr-4 py-4 bg-white/70 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-500/30 focus:border-indigo-600 transition-all duration-300 shadow-sm hover:shadow-md peer"
+            />
+          </div>
+          <div class="mt-1 text-sm text-red-600 min-h-[1.25rem]" *ngIf="parcelForm.get('recipientEmail')?.invalid && (parcelForm.get('recipientEmail')?.dirty || parcelForm.get('recipientEmail')?.touched)">
+            <span *ngIf="parcelForm.get('recipientEmail')?.errors?.['required']">Recipient email is required.</span>
+            <span *ngIf="parcelForm.get('recipientEmail')?.errors?.['email']">Invalid email format.</span>
+          </div>
+        </div>
+
+        <!-- Cost -->
+        <div class="group relative">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Cost <span class="text-red-500">*</span></label>
+          <div class="relative">
+            <i class="fas fa-dollar-sign absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors duration-300"></i>
+            <input
+              type="number"
+              formControlName="cost"
+              placeholder="0.00"
+              step="0.01"
+              class="w-full pl-12 pr-4 py-4 bg-white/70 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-500/30 focus:border-indigo-600 transition-all duration-300 shadow-sm hover:shadow-md peer"
+            />
+          </div>
+          <span class="text-sm text-gray-500 mt-1 inline-block">$ USD</span>
+          <div class="mt-1 text-sm text-red-600 min-h-[1.25rem]" *ngIf="parcelForm.get('cost')?.invalid && (parcelForm.get('cost')?.dirty || parcelForm.get('cost')?.touched)">
+            <span *ngIf="parcelForm.get('cost')?.errors?.['required']">Cost is required.</span>
+            <span *ngIf="parcelForm.get('cost')?.errors?.['min']">Cost must be greater than 0.</span>
+          </div>
+        </div>
+
+        <!-- Dimensions -->
+        <div class="group relative">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Dimensions</label>
+          <div class="relative">
+            <i class="fas fa-ruler-combined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors duration-300"></i>
+            <input
+              type="text"
+              formControlName="dimensions"
+              placeholder="L x W x H (cm)"
+              class="w-full pl-12 pr-4 py-4 bg-white/70 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-500/30 focus:border-indigo-600 transition-all duration-300 shadow-sm hover:shadow-md peer"
+            />
+          </div>
+        </div>
+
+        <!-- Note -->
+        <div class="md:col-span-2 group relative">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Note (optional)</label>
+          <div class="relative">
+            <i class="fas fa-sticky-note absolute left-4 top-6 text-gray-400 group-focus-within:text-indigo-600 transition-colors duration-300"></i>
+            <textarea
+              formControlName="note"
+              rows="4"
+              placeholder="Any special instructions..."
+              class="w-full pl-12 pr-4 py-4 bg-white/70 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-500/30 focus:border-indigo-600 transition-all duration-300 resize-none shadow-sm hover:shadow-md peer"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="md:col-span-2 flex justify-end">
+          <button
+            type="submit"
+            [disabled]="loading || parcelForm.invalid"
+            class="px-12 py-4 bg-gradient-to-r from-indigo-600 to-purple-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transform transition-all duration-300 flex items-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-lg"
+          >
+            <span>{{ loading ? 'Creating...' : 'Create Parcel' }}</span>
+            <i class="fas fa-truck-loading" *ngIf="!loading"></i>
+            <i class="fas fa-spinner fa-spin" *ngIf="loading"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

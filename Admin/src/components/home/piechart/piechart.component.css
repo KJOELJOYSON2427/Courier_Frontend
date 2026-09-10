@@ -1,0 +1,13 @@
+:host {
+    display: block;
+    margin-top: 45px;
+    margin-left: 45px;
+}
+
+canvas {
+    transition: transform 0.3s ease-in-out;
+}
+
+canvas:hover {
+    transform: scale(1.03);
+ }

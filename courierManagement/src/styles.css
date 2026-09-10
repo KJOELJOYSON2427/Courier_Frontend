@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+
+@custom-variant dark (&:where(.dark, .dark *));
+html {
+  height: 100%; /* Ensures the html element spans the full height of the viewport */
+  background-color: #000; /* This color will show if the body is smaller than the viewport */
+}
+
+body {
+  min-height: 100%; /* Ensures the body is at least full height but can grow with content */
+  margin: 0;
+  padding: 0;
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-in-out both;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

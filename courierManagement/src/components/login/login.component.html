@@ -1,0 +1,112 @@
+<!-- Refined Login Page - Subtle, Unified Design -->
+<div class="min-h-screen bg-white dark:bg-gray-900 
+            text-black dark:text-white
+            flex items-center justify-center relative">
+
+  <!-- Very subtle background texture -->
+  <div class="absolute inset-0 opacity-5">
+    <div class="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900"></div>
+  </div>
+
+  <!-- Left Side: Hero Image (hidden on mobile) -->
+  <div class="hidden md:flex w-1/2  mt-4 p-2 items-center justify-center relative">
+    <div class="relative p-8">
+      <!-- Removed the prominent card background - image now blends naturally -->
+      <img src="../../assets/hero.png" alt="SendIt Parcel Delivery" 
+           class="w-500  rounded-2xl opacity-90" />
+    </div>
+  </div>
+
+  <!-- Right Side: Login Form -->
+  <div class="w-full md:w-1/2 flex items-center justify-center p-8">
+    <form 
+      #loginForm="ngForm"
+      (ngSubmit)="submit(loginForm)"
+      class="relative bg-white dark:bg-gray-800 
+                p-12 rounded-3xl shadow-lg w-full max-w-md space-y-8 
+                border border-gray-200 dark:border-gray-700"
+    >
+      <!-- Welcome Title -->
+      <div class="text-center space-y-3">
+        <h2 class="text-4xl font-bold text-gray-900 dark:text-white">Welcome Back!</h2>
+        <p class="text-lg text-gray-600 dark:text-gray-300">Log in to track and send your parcels</p>
+      </div>
+
+      <!-- Email Field -->
+      <div class="relative">
+        <div class="flex items-center bg-gray-50 dark:bg-gray-700 rounded-2xl border border-gray-200 dark:border-gray-600">
+          <span class="pl-6 text-amber-600 dark:text-amber-400">
+            <i class="fas fa-envelope text-2xl"></i>
+          </span>
+          <input
+            type="email"
+            name="email"
+            required
+            email
+            [(ngModel)]="email"
+            #emailCtrl="ngModel"
+            placeholder="Enter your email"
+            class="w-full pl-4 pr-6 py-5 bg-transparent text-black dark:text-white outline-none text-lg"
+          />
+        </div>
+
+        <p *ngIf="emailCtrl.invalid && emailCtrl.touched"
+           class="text-red-500 text-sm mt-2 pl-4">
+          <i class="fas fa-exclamation-triangle mr-1"></i> Enter a valid email
+        </p>
+      </div>
+
+      <!-- Password Field -->
+      <div class="relative">
+        <div class="flex items-center bg-gray-50 dark:bg-gray-700 rounded-2xl border border-gray-200 dark:border-gray-600">
+          <span class="pl-6 text-amber-600 dark:text-amber-400">
+            <i class="fas fa-lock text-2xl"></i>
+          </span>
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            name="password"
+            required
+            minlength="6"
+            [(ngModel)]="password"
+            #passwordCtrl="ngModel"
+            placeholder="Enter your password"
+            class="w-full pl-4 pr-14 py-5 bg-transparent text-black dark:text-white outline-none text-lg"
+          />
+          <button
+            type="button"
+            (click)="showPassword = !showPassword"
+            class="absolute right-5 text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition">
+            <i class="fas fa-eye{{ showPassword ? '-slash' : '' }} text-xl"></i>
+          </button>
+        </div>
+
+        <p *ngIf="passwordCtrl.invalid && passwordCtrl.touched"
+           class="text-red-500 text-sm mt-2 pl-4">
+          <i class="fas fa-exclamation-triangle mr-1"></i> Minimum 6 characters required
+        </p>
+      </div>
+
+      <!-- Login Button -->
+      <button
+        type="submit"
+        [disabled]="loginForm.invalid"
+        class="w-full py-5 rounded-2xl font-bold text-xl
+               bg-gradient-to-r from-amber-500 to-yellow-600 text-white
+               hover:from-amber-600 hover:to-yellow-700
+               disabled:opacity-50 disabled:cursor-not-allowed
+               shadow-lg hover:shadow-xl transition-all duration-300
+               flex items-center justify-center gap-4"
+      >
+        <i class="fas fa-sign-in-alt text-2xl"></i>
+        Login
+      </button>
+
+      <!-- Forgot password link -->
+      <div class="text-center">
+        <a href="#" class="text-base text-gray-600 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition font-medium">
+          Forgot your password?
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

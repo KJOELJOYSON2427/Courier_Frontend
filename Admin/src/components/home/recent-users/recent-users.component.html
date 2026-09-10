@@ -1,0 +1,46 @@
+
+
+<div class="w-[350px] bg-white shadow-xl rounded-2xl p-6">
+    <h1 class="text-xl font-semibold text-gray-900 mb-4">
+        Recent Users
+    </h1>
+
+
+    <div class="flex flex-col gap-4">
+        <div
+         *ngFor ="let u of recentUsers"
+         class="flex items-center justify-between p-3 rounded-xl
+         hover:bg-gray-100 transition cursor-pointer
+         "
+        >
+        
+        <!-- Left user section -->
+         <div class="flex items-center gap-3">
+            <!--Avatar-->
+            <img 
+            alt="user"
+            [src]="u.avatar"
+            class="w-12 h-12 rounded-full shadow-md object-cover"
+            />
+
+
+            <!-- User info -->
+            <div>
+                <h4 class="text-base font-semibold text-gray-800">
+                    {{ u.name }}
+                </h4>
+                <p class="text-sm text-gray-500">
+                    {{ u.role }} 
+               </p>
+             </div>   
+         </div>
+
+        <!-- Joined -->
+        <span class="text-sm text-gray-400">
+            {{ u.joined }}
+            </span>
+
+
+        </div>
+    </div>
+</div>

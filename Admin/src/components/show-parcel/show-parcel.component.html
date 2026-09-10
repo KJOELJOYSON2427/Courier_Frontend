@@ -1,0 +1,149 @@
+<app-toaster>
+</app-toaster>
+
+<div class="min-h-screen bg-black py-12 px-4">
+  <div class="max-w-5xl mx-auto">
+
+    <div class="bg-gray-900/95 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-purple-500/30">
+
+      <!-- Header -->
+      <div class="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 px-10 py-8">
+        <h2 class="text-3xl font-bold text-white">
+          {{ isViewMode ? 'View Parcel' : 'Edit Parcel' }}
+        </h2>
+        <p class="text-purple-100 mt-2">
+          {{ isViewMode ? 'Parcel shipment details' : 'Update shipment information' }}
+        </p>
+      </div>
+
+      <!-- Form -->
+      <form
+        [formGroup]="parcelForm"
+        (ngSubmit)="onSubmit()"
+        class="p-10 grid grid-cols-1 md:grid-cols-2 gap-8"
+      >
+
+        <!-- Tracking Number -->
+        <div>
+          <label class="block text-sm font-medium text-gray-200 mb-2">Tracking Number</label>
+          <input formControlName="trackingNumber" placeholder="TRK-123456" 
+            class="w-full px-5 py-4 border border-gray-700 rounded-xl bg-gray-800/50 text-white placeholder-gray-500
+            focus:outline-none focus:ring-4 focus:ring-purple-500/30
+            focus:border-purple-500 transition-all duration-300" />
+        </div>
+
+        <!-- Weight -->
+        <div>
+          <label class="block text-sm font-medium text-gray-200 mb-2">Weight</label>
+          <input type="number" formControlName="weight" placeholder="20" 
+            class="w-full px-5 py-4 border border-gray-700 rounded-xl bg-gray-800/50 text-white placeholder-gray-500
+            focus:outline-none focus:ring-4 focus:ring-purple-500/30
+            focus:border-purple-500 transition-all duration-300" />
+          <span class="text-xs text-gray-400 mt-1 block">grams</span>
+        </div>
+
+        <!-- From -->
+        <div>
+          <label class="block text-sm font-medium text-gray-200 mb-2">From</label>
+          <input formControlName="from" placeholder="Ontario, USA" 
+            class="w-full px-5 py-4 border border-gray-700 rounded-xl bg-gray-800/50 text-white placeholder-gray-500
+            focus:outline-none focus:ring-4 focus:ring-purple-500/30
+            focus:border-purple-500 transition-all duration-300" />
+        </div>
+
+        <!-- To -->
+        <div>
+          <label class="block text-sm font-medium text-gray-200 mb-2">To</label>
+          <input formControlName="to" placeholder="Saint Mary, USA" 
+            class="w-full px-5 py-4 border border-gray-700 rounded-xl bg-gray-800/50 text-white placeholder-gray-500
+            focus:outline-none focus:ring-4 focus:ring-purple-500/30
+            focus:border-purple-500 transition-all duration-300" />
+        </div>
+
+        <!-- Sender -->
+        <div>
+          <label class="block text-sm font-medium text-gray-200 mb-2">Sender Name</label>
+          <input formControlName="senderName" 
+            class="w-full px-5 py-4 border border-gray-700 rounded-xl bg-gray-800/50 text-white placeholder-gray-500
+            focus:outline-none focus:ring-4 focus:ring-purple-500/30
+            focus:border-purple-500 transition-all duration-300" />
+        </div>
+
+        <!-- Recipient -->
+        <div>
+          <label class="block text-sm font-medium text-gray-200 mb-2">Recipient Name</label>
+          <input formControlName="recipientName" 
+            class="w-full px-5 py-4 border border-gray-700 rounded-xl bg-gray-800/50 text-white placeholder-gray-500
+            focus:outline-none focus:ring-4 focus:ring-purple-500/30
+            focus:border-purple-500 transition-all duration-300" />
+        </div>
+
+        <!-- Emails -->
+        <div>
+          <label class="block text-sm font-medium text-gray-200 mb-2">Sender Email</label>
+          <input type="email" formControlName="senderEmail" 
+            class="w-full px-5 py-4 border border-gray-700 rounded-xl bg-gray-800/50 text-white placeholder-gray-500
+            focus:outline-none focus:ring-4 focus:ring-purple-500/30
+            focus:border-purple-500 transition-all duration-300" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-200 mb-2">Recipient Email</label>
+          <input type="email" formControlName="recipientEmail" 
+            class="w-full px-5 py-4 border border-gray-700 rounded-xl bg-gray-800/50 text-white placeholder-gray-500
+            focus:outline-none focus:ring-4 focus:ring-purple-500/30
+            focus:border-purple-500 transition-all duration-300" />
+        </div>
+
+        <!-- Cost -->
+        <div>
+          <label class="block text-sm font-medium text-gray-200 mb-2">Cost</label>
+          <input type="number" formControlName="cost" placeholder="0.00" 
+            class="w-full px-5 py-4 border border-gray-700 rounded-xl bg-gray-800/50 text-white placeholder-gray-500
+            focus:outline-none focus:ring-4 focus:ring-purple-500/30
+            focus:border-purple-500 transition-all duration-300" />
+          <span class="text-xs text-gray-400 mt-1 block">$ USD</span>
+        </div>
+
+        <!-- Date -->
+        <div>
+          <label class="block text-sm font-medium text-gray-200 mb-2">Shipping Date</label>
+          <input type="date" formControlName="date" 
+            class="w-full px-5 py-4 border border-gray-700 rounded-xl bg-gray-800/50 text-white placeholder-gray-500
+            focus:outline-none focus:ring-4 focus:ring-purple-500/30
+            focus:border-purple-500 transition-all duration-300" />
+        </div>
+
+        <!-- Note -->
+        <div class="md:col-span-2">
+          <label class="block text-sm font-medium text-gray-200 mb-2">Note</label>
+          <textarea rows="4" formControlName="note" 
+            class="w-full px-5 py-4 border border-gray-700 rounded-xl bg-gray-800/50 text-white placeholder-gray-500
+            focus:outline-none focus:ring-4 focus:ring-purple-500/30
+            focus:border-purple-500 transition-all duration-300 resize-none"></textarea>
+        </div>
+
+        <!-- Action -->
+        <div class="md:col-span-2 flex justify-end" *ngIf="!isViewMode">
+          <button
+            type="submit"
+            class="px-10 py-4 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:scale-105 hover:shadow-purple-500/50 transition-all duration-300"
+          >
+            Update Parcel
+          </button>
+        </div>
+      </form>
+
+      <!-- Feedback -->
+      <div
+        *ngIf="isViewMode"
+        class="mx-10 mb-10 p-6 rounded-2xl bg-gray-800/50 backdrop-blur border border-gray-700"
+      >
+        <h3 class="text-lg font-semibold text-gray-200 mb-1">Feedback</h3>
+        <p class="text-gray-400">Received in good condition</p>
+         <span class="text-blue-500 font-black text-[22px]">{{status!}}</span>
+      </div>
+
+    </div>
+  </div>
+</div>

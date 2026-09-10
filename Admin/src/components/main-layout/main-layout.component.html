@@ -1,0 +1,19 @@
+<div class="flex flex-col min-h-screen">
+
+<!-- Navbar -->    
+<app-navbar></app-navbar>
+
+<!-- Content Body -->
+<div class="flex flex-1">
+    <div class="w-[20%] bg-[#1B1B1B]">
+        <app-menu>
+
+        </app-menu>
+    </div>
+    <div class="w-[80%] shadow-xl bg-[#1B1B1B] text-[#D7D7D7] p-5">
+        <router-outlet></router-outlet>
+    </div>
+    
+</div>
+<app-footer></app-footer>
+</div>

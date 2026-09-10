@@ -1,0 +1,102 @@
+<div class="bg-[#0f0f0f] min-h-screen text-white">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between px-6 pt-8 pb-6">
+    <div class="flex items-center gap-5">
+      <button (click)="routeTo()" class="group p-3 rounded-2xl bg-gray-800/60 backdrop-blur-xl hover:bg-amber-500/20 transition-all duration-300">
+        <fa-icon [icon]="faArrowLeft" class="text-xl text-gray-300 group-hover:text-amber-400 transition-colors"></fa-icon>
+      </button>
+      <h1 class="text-4xl font-bold bg-gradient-to-r from-amber-400 via-yellow-500 to-orange-500 bg-clip-text text-transparent">
+        All Parcels
+      </h1>
+    </div>
+
+    <div class="flex items-center gap-4 bg-gray-800/60 backdrop-blur-xl px-6 py-3 rounded-2xl shadow-2xl border border-gray-700/50">
+      <div class="w-11 h-11 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center font-bold text-lg">
+        A
+      </div>
+      <span class="font-medium">Alok Mondala</span>
+    </div>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="px-6 mb-8">
+    <div class="relative max-w-xl">
+      <fa-icon [icon]="faSearch" class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-500 text-lg"></fa-icon>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="filterParcels()"
+        placeholder="Search by sender, recipient, address or note..."
+        class="w-full pl-14 pr-6 py-5 rounded-2xl bg-gray-800/70 backdrop-blur-xl border border-gray-700 focus:border-amber-500 focus:outline-none transition-all duration-300 text-base"
+      />
+    </div>
+  </div>
+
+  <!-- Table Container -->
+  <div class="mx-6 overflow-hidden rounded-3xl bg-gray-900/40 backdrop-blur-2xl border border-gray-800 shadow-2xl">
+    <div class="overflow-x-auto">
+
+      <!-- Table Header -->
+      <div class="grid grid-cols-[50px_2fr_1.2fr_1.8fr_1.8fr_1fr] gap-4 px-8 py-6 text-xs font-bold uppercase tracking-wider text-gray-500 border-b border-gray-800">
+        <div></div>
+        <div class="cursor-pointer hover:text-amber-400 transition-colors">From</div>
+        <div class="cursor-pointer hover:text-amber-400 transition-colors">Date</div>
+        <div class="cursor-pointer hover:text-amber-400 transition-colors">Recipient</div>
+        <div class="cursor-pointer hover:text-amber-400 transition-colors">To</div>
+        <div class="cursor-pointer hover:text-amber-400 transition-colors">Note</div>
+      </div>
+
+      <!-- Table Rows -->
+      <div
+        *ngFor="let parcel of displayedParcels; let i = index"
+        class="parcel-row grid grid-cols-[50px_2fr_1.2fr_1.8fr_1.8fr_1fr] gap-4 px-8 py-6 border-b border-gray-800/50"
+        [style.--delay]="i * 60 + 'ms'"
+      >
+        <input type="checkbox" class="w-5 h-5 rounded accent-amber-500" />
+
+        <div class="font-semibold text-white truncate">{{ parcel.from }}</div>
+        <div class="text-gray-400">{{ parcel.date | date:'dd MMM yyyy' }}</div>
+        <div class="text-gray-200 truncate">{{ parcel.recipient }}</div>
+        <div class="text-gray-200 truncate">{{ parcel.to }}</div>
+
+        <div>
+          <span class="px-4 py-2 rounded-full text-xs font-semibold bg-gradient-to-r from-amber-500/20 to-orange-600/20 text-amber-300 border border-amber-600/30">
+            {{ parcel.note || 'Standard' }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="displayedParcels.length === 0" class="py-24 text-center">
+        <fa-icon [icon]="faBoxOpen" class="text-7xl text-gray-700 mb-6 opacity-60"></fa-icon>
+        <p class="text-2xl text-gray-500">No parcels found</p>
+        <p class="text-gray-600 mt-2">Try adjusting your search</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="flex justify-between items-center mt-10 px-6 pb-8">
+    <p class="text-sm text-gray-500">
+      Showing {{ displayedParcels.length ? (page - 1) * pageSize + 1 : 0 }} to 
+      {{ displayedParcels.length ? math.min(page * pageSize, totalFiltered) : 0 }} 
+      of {{ totalFiltered }} parcels
+    </p>
+
+    <div class="flex gap-3">
+      <button 
+        (click)="page = page - 1" 
+        [disabled]="page === 1"
+        class="px-6 py-3 rounded-xl bg-gray-800/60 backdrop-blur hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all">
+        Previous
+      </button>
+      <button 
+        (click)="page = page + 1" 
+        [disabled]="page * pageSize >= totalFiltered"
+        class="px-8 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 shadow-lg transition-all">
+        Next
+      </button>
+    </div>
+  </div>
+</div>

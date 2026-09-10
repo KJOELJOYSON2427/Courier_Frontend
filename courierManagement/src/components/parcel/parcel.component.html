@@ -1,0 +1,123 @@
+<div class="min-h-[cal(100vh-140px)]
+bg-gray-100 dark:bg-gray-950
+text-gray-900 dark:text-gray-100
+flex items-center justify-center 
+px-4 py-10">
+  <!-- Card -->
+  <div class="w-full max-w-5xl
+    bg-white dark:bg-gray-900
+      rounded-3xl
+      shadow-2xl
+      border border-gray-200 dark:border-gray-800
+      p-8 md:p-10
+      animate-fade-in
+      ">
+    <!-- Header -->
+    <div class="flex items-center gap-4 mb-8">
+      <i class="fas fa-arrow-left text-xl cursor-pointer text-gray-500 hover:text-rose-500"
+      routerLink="/myParcels"
+      ></i>
+      <h1 class="text-2xl font-bold tracking-tight">
+        Parcel Details
+      </h1>
+      <span class="ml-auto px-4 py-1 rounded-full text-sm font-semibold
+       bg-rose-100 text-rose-600
+      dark:bg-rose-900/30 dark:text-rose-400
+      ">
+        {{ parcel.status }}
+
+      </span>
+    </div>
+
+
+    <!-- Content -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+      <!-- LEFT : Details -->
+
+      <div class="space-y-4 text-sm">
+
+        <p><i class="fas fa-location-dot text-rose-500 mr-2"></i>
+          <b>From:</b> {{ parcel.from }}
+        </p>
+
+        <p><i class="fas fa-location-arrow text-rose-500 mr-2"></i>
+          <b>To:</b> {{ parcel.to }}
+        </p>
+
+        <p><i class="fas fa-weight-hanging text-rose-500 mr-2"></i>
+          <b>Weight:</b> {{ parcel.weight }}
+        </p>
+
+        <p><i class="fas fa-calendar text-rose-500 mr-2"></i>
+          <b>Date:</b> {{ parcel.date }}
+        </p>
+
+        <p><i class="fas fa-user text-rose-500 mr-2"></i>
+          <b>Sender:</b> {{ parcel.sender }}
+        </p>
+
+        <p><i class="fas fa-envelope text-rose-500 mr-2"></i>
+          <b>Sender Email:</b> {{ parcel.senderEmail }}
+        </p>
+
+        <p><i class="fas fa-user-check text-rose-500 mr-2"></i>
+          <b>Receiver:</b> {{ parcel.receiver }}
+        </p>
+
+        <p><i class="fas fa-envelope-open text-rose-500 mr-2"></i>
+          <b>Receiver Email:</b> {{ parcel.receiverEmail }}
+        </p>
+
+        <p><i class="fas fa-dollar-sign text-rose-500 mr-2"></i>
+          <b>Cost:</b> {{ parcel.cost }}
+        </p>
+
+        <p><i class="fas fa-note-sticky text-rose-500 mr-2"></i>
+          <b>Note:</b> {{ parcel.note }}
+        </p>
+
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-4">
+          Tracking ID: <span class="font-mono">{{ trackingId }}</span>
+        </p>
+
+      </div>
+
+      <!-- RIGHT : Feedback -->
+      <div class="bg-gray-50 dark:bg-gray-800
+               rounded-2xl
+               p-6
+               flex flex-col
+               animate-slide-up">
+
+        <h2 class="text-lg font-semibold mb-4">
+          Leave a feedback
+        </h2>
+
+        <textarea [(ngModel)]="feedback" rows="6" placeholder="Share your experience..." class="w-full resize-none
+          rounded-xl
+                 bg-white dark:bg-gray-900
+                 border border-gray-300 dark:border-gray-700
+                 px-4 py-3
+                 focus:outline-none
+                 focus:ring-2 focus:ring-rose-500
+                 transition
+          ">
+
+        </textarea>
+
+        <button (click)="submitFeedback()" class="mt-5 
+          bg-rose-500 hover:bg-rose-600
+          text-white
+          font-semibold
+          py-3 rounded-xl
+          transition
+          active:scale-95
+          ">
+          Submit Feedback
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

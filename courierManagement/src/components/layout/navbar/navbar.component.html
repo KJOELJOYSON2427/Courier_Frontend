@@ -1,0 +1,28 @@
+<div class="h-[80px] bg-[#e9eb77] dark:bg-gray-900 flex items-center justify-between px-10 shadow-md">
+  
+  <!-- Logo -->
+  <img
+    src="../../../assets/logo.png"
+    alt="brandImg"
+    class="h-10 w-auto"
+  />
+  <div class="flex justify-between items-center space-x-10">
+  <!-- Login Button -->
+  <button
+    routerLink="/login"
+    class="bg-black text-white px-6 py-2 rounded-lg font-medium hover:bg-gray-800 transition cursor-pointer"
+  >
+    Login
+  </button>
+   <button
+    (click)="themeService.toggleTheme()"
+    class="dark:bg-black  bg-white text-white px-4 py-2 rounded-3xl w-20">
+
+    <!-- Icon based on current theme -->
+    <span *ngIf="themeService.theme() === 'light'">🌞</span>
+    <span *ngIf="themeService.theme() === 'dark'">🌙</span>
+    <span *ngIf="themeService.theme() === 'system'">🖥️</span>
+
+  </button>
+</div>
+</div>

@@ -1,0 +1,209 @@
+<app-toaster></app-toaster>
+
+<div class="max-w-7xl mx-auto p-6 md:p-8">
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-6">
+    <div>
+      <h2 class="text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+        All Parcels
+      </h2>
+      <p class="text-gray-600 mt-2 text-lg">Manage and track all your shipments in one place</p>
+    </div>
+
+    <button routerLink="/newParcel"
+            class="px-7 py-4 bg-gradient-to-r from-indigo-600 to-purple-700 text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 flex items-center gap-3 text-lg">
+      <span class="text-2xl">+</span> New Parcel
+    </button>
+  </div>
+
+  <!-- Enhanced Search & Filter Section -->
+  <div class="bg-white rounded-3xl shadow-lg border border-gray-200 p-6 mb-10">
+    <div class="flex flex-col lg:flex-row gap-6 items-center">
+      <!-- Search Input with Icons and Clear Button -->
+      <div class="relative flex-1 w-full">
+        <fa-icon [icon]="faSearch"
+                 class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg pointer-events-none">
+        </fa-icon>
+
+        <input type="text"
+               [(ngModel)]="searchText"
+               (input)="onSearchChange()"
+               placeholder="Search by tracking number, sender, receiver, or status..."
+               class="w-full pl-12 pr-12 py-4 bg-gray-50 border border-gray-300 rounded-2xl 
+                      focus:outline-none focus:ring-4 focus:ring-indigo-200 focus:border-indigo-500 
+                      transition-all text-base placeholder-gray-500">
+
+        <!-- Clear Button -->
+        <button *ngIf="searchText"
+                (click)="clearSearch()"
+                class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 
+                       transition-colors text-lg">
+          <fa-icon [icon]="faTimes"></fa-icon>
+        </button>
+      </div>
+
+      <!-- Filter Dropdown -->
+      <div class="relative w-full lg:w-64">
+        <fa-icon [icon]="faFilter"
+                 class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg pointer-events-none">
+        </fa-icon>
+
+        <select [(ngModel)]="selectedSearchColumn"
+                (change)="onSearchChange()"
+                class="w-full pl-12 pr-10 py-4 bg-gray-50 border border-gray-300 rounded-2xl 
+                       focus:outline-none focus:ring-4 focus:ring-indigo-200 focus:border-indigo-500 
+                       transition-all appearance-none cursor-pointer text-base font-medium text-gray-800">
+          <option value="all">All Fields</option>
+          <option value="trackingNumber">Tracking No.</option>
+          <option value="from">From (Sender)</option>
+          <option value="to">To (Receiver)</option>
+          <option value="status">Status</option>
+        </select>
+
+        <!-- Custom Dropdown Arrow -->
+        <fa-icon [icon]="faChevronDown"
+                 class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">
+        </fa-icon>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="bg-white rounded-3xl shadow-lg border border-gray-200 overflow-hidden">
+    <div class="animate-pulse">
+      <div class="h-20 bg-gradient-to-r from-gray-100 to-gray-50"></div>
+      <div class="p-8 space-y-6">
+        <div class="h-16 bg-gray-100 rounded-2xl"></div>
+        <div class="h-16 bg-gray-100 rounded-2xl"></div>
+        <div class="h-16 bg-gray-100 rounded-2xl"></div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="error && !loading" class="bg-red-50 border border-red-300 text-red-800 px-8 py-6 rounded-3xl text-center shadow-lg">
+    <p class="font-bold text-xl">Oops! Something went wrong.</p>
+    <p class="text-base mt-2">{{ error }}</p>
+  </div>
+
+  <div *ngIf="!loading && !error && parcels.length === 0"
+       class="bg-white rounded-3xl shadow-2xl border border-gray-200 p-20 text-center">
+    <div class="mx-auto w-40 h-40 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center mb-8 shadow-inner">
+      <i class="fas fa-box-open text-7xl text-indigo-400"></i>
+    </div>
+    <h3 class="text-3xl font-bold text-gray-800 mb-4">No Parcels Found</h3>
+    <p class="text-gray-600 text-lg mb-8">We couldn't find any parcels matching your search criteria.</p>
+    <button (click)="searchText = ''; onSearchChange()"
+            class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-700 text-white font-bold rounded-2xl hover:shadow-xl hover:-translate-y-1 transform transition-all duration-300">
+      Clear Search
+    </button>
+  </div>
+
+  <div *ngIf="!loading && parcels.length > 0" class="space-y-8">
+    <div class="bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gradient-to-r from-indigo-50 via-purple-50 to-indigo-50">
+            <tr>
+              <th class="px-8 py-6 text-left text-sm font-extrabold text-gray-800 uppercase tracking-widest">No.</th>
+              <th class="px-8 py-6 text-left text-sm font-extrabold text-gray-800 uppercase tracking-widest">From</th>
+              <th class="px-8 py-6 text-left text-sm font-extrabold text-gray-800 uppercase tracking-widest">To</th>
+              <th class="px-8 py-6 text-left text-sm font-extrabold text-gray-800 uppercase tracking-widest">Tracking No.</th>
+              <th class="px-8 py-6 text-right text-sm font-extrabold text-gray-800 uppercase tracking-widest">Status</th>
+              <th class="px-8 py-6 text-right text-sm font-extrabold text-gray-800 uppercase tracking-widest">Cost</th>
+              <th class="px-8 py-6 text-center text-sm font-extrabold text-gray-800 uppercase tracking-widest">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-100">
+            <tr *ngFor="let parcel of parcels; let i = index"
+                class="hover:bg-gradient-to-r hover:from-indigo-50/70 hover:to-purple-50/70 transition-all duration-300 cursor-pointer group"
+                [routerLink]="['/parcel/view/', parcel.trackingNumber]">
+              
+              <td class="px-8 py-6 text-base font-semibold text-gray-900">{{ (currentPage * pageSize) + i + 1 }}</td>
+              <td class="px-8 py-6 text-base text-gray-800">{{ parcel.senderAddress }}</td>
+              <td class="px-8 py-6 text-base text-gray-800">{{ parcel.recieverAddress }}</td>
+              <td class="px-8 py-6 text-base font-mono text-indigo-700 font-bold">{{ parcel.trackingNumber }}</td>
+              <td class="px-8 py-6 text-base text-right">
+                <span class="inline-flex items-center px-5 py-2 rounded-full text-sm font-bold shadow-sm"
+                      [ngClass]="{
+                        'bg-green-100 text-green-800 shadow-green-200/50': parcel.status === 'Delivered',
+                        'bg-blue-100 text-blue-800 shadow-blue-200/50': parcel.status === 'In Transit',
+                        'bg-yellow-100 text-yellow-800 shadow-yellow-200/50': parcel.status === 'Pending',
+                        'bg-gray-100 text-gray-800 shadow-gray-200/50': parcel.status === 'Created'
+                      }">
+                  {{ parcel.status }}
+                </span>
+              </td>
+              <td class="px-8 py-6 text-right text-base font-bold">
+                <span class="inline-flex items-center px-5 py-2 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg">
+                  ${{ parcel.cost }}
+                </span>
+              </td>
+              <td class="px-8 py-6 text-center" (click)="$event.stopPropagation()">
+                <div class="flex items-center justify-center gap-5">
+                  <button class="group p-3 rounded-xl hover:bg-blue-100 hover:shadow-md transition-all duration-200"
+                          [routerLink]="['/parcel/view/', parcel.trackingNumber]"
+                          title="View Details">
+                    <fa-icon [icon]="icons" class="text-blue-600 text-xl group-hover:scale-125 transition-transform"></fa-icon>
+                  </button>
+                  <button class="group p-3 rounded-xl hover:bg-green-100 hover:shadow-md transition-all duration-200"
+                          [routerLink]="['/parcel/edit/', parcel.trackingNumber]"
+                          title="Edit Parcel">
+                    <fa-icon [icon]="edit" class="text-green-600 text-xl group-hover:scale-125 transition-transform"></fa-icon>
+                  </button>
+                  <button class="group p-3 rounded-xl hover:bg-red-100 hover:shadow-md transition-all duration-200"
+                          (click)="deleteParcel(parcel.trackingNumber)"
+                          title="Delete Parcel">
+                    <fa-icon [icon]="delete" class="text-red-600 text-xl group-hover:scale-125 transition-transform"></fa-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="flex flex-col lg:flex-row justify-between items-center gap-8 bg-white rounded-3xl shadow-2xl border border-gray-200 p-8">
+      <div class="text-base text-gray-700 font-medium">
+        Showing <strong>{{ (currentPage * pageSize) + 1 }}</strong> to 
+        <strong>{{ (currentPage * pageSize) + parcels.length }}</strong> of 
+        <strong>{{ totalItems }}</strong> parcels
+      </div>
+
+      <div class="flex items-center gap-6">
+        <select (change)="onPageSizeChange($event)"
+                class="px-6 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-300 font-semibold">
+          <option value="5" [selected]="pageSize === 5">5 per page</option>
+          <option value="10" [selected]="pageSize === 10">10 per page</option>
+          <option value="20" [selected]="pageSize === 20">20 per page</option>
+          <option value="50" [selected]="pageSize === 50">50 per page</option>
+        </select>
+
+        <nav class="flex items-center gap-2">
+          <button (click)="goToPage(0)" [disabled]="!hasPrevious"
+                  class="px-5 py-3 rounded-xl border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition">
+            First
+          </button>
+
+          <button (click)="goToPage(currentPage - 1)" [disabled]="!hasPrevious"
+                  class="px-6 py-3 rounded-xl border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition">
+            ← Prev
+          </button>
+
+          <button *ngFor="let page of [].constructor(totalPages > 5 ? 5 : totalPages); let i = index"
+                  [ngClass]="{
+                    'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-xl': getPageNumber(i) === currentPage,
+                    'hover:bg-gray-100 hover:shadow-md': getPageNumber(i) !== currentPage
+                  }"
+                  (click)="goToPage(getPageNumber(i))"
+                  class="w-12 h-12 rounded-xl border border-gray-300 font-bold transition-all duration-200">
+            {{ getPageNumber(i) + 1 }}
+          </button>
+
+          <button (click)="goToPage(currentPage + 1)" [disabled]="!hasNext"
+                  class="px-6 py-3 rounded-xl border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition">
+            Next →
+          </button>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

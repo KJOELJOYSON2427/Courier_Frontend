@@ -1,0 +1,62 @@
+/* Fade-in animation for rows */
+.row-anim {
+  animation: fadeInUp 0.5s ease both;
+}
+
+/* Delay animation for stagger effect */
+.row-anim:nth-child(1) { animation-delay: .1s; }
+.row-anim:nth-child(2) { animation-delay: .2s; }
+.row-anim:nth-child(3) { animation-delay: .3s; }
+.row-anim:nth-child(4) { animation-delay: .4s; }
+.row-anim:nth-child(5) { animation-delay: .5s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Buttons hover animation */
+.action-btn {
+  padding: 6px;
+  transition: transform 0.2s ease;
+}
+.action-btn:hover {
+  transform: scale(1.15);
+}
+
+/* Cost badge */
+.cost-badge {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+/* Recipient badge */
+.recipient-badge {
+  background: linear-gradient(135deg, #6366f1, #7c3aed);
+}
+
+/* New button */
+.new-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  transition: 0.3s ease;
+}
+.new-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 20px rgba(118, 75, 162, 0.3);
+}
+.new-btn {
+  background: linear-gradient(to right, #6366f1, #a855f7);
+}
+
+.row-anim {
+  transition: all 0.25s ease;
+}
+
+tr:hover td {
+  background-color: rgba(99, 102, 241, 0.04) !important;
+}

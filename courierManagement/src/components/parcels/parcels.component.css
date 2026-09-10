@@ -1,0 +1,36 @@
+/* Staggered entrance animation - pure CSS */
+.parcel-row {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideUpFade 0.7s ease-out forwards;
+  animation-delay: var(--delay, 0ms);
+}
+
+/* Hover lift + subtle background glow */
+.parcel-row:hover {
+  background: rgba(251, 191, 36, 0.1);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 10;
+}
+
+/* Glow effect on note badge on hover */
+.parcel-row:hover span {
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+@keyframes slideUpFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Accessibility: focus ring */
+input:focus-visible {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}

@@ -1,0 +1,17 @@
+<div class="min-h-screen relative overflow-hidden flex items-center justify-center px-6">
+  <!-- Full Background Image -->
+  <div class="absolute inset-0">
+    <img src="../../assets/login.jpg" alt="Background" class="w-full h-full object-cover" />
+    <!-- Dark overlay for contrast -->
+    <div class="absolute inset-0 bg-gradient-to-br from-black/80 via-black/60 to-black/80"></div>
+  </div>
+
+  <!-- Animated background blobs (subtle enhancement) -->
+  <div class="absolute top-[-100px] left-[-100px] w-[500px] h-[500px] bg-[#E9EB77]/30 rounded-full blur-3xl animate-pulse"></div>
+  <div class="absolute bottom-[-150px] right-[-150px] w-[600px] h-[600px] bg-purple-600/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+
+ <app-login></app-login>
+
+  <app-footer class="absolute bottom-0 left-0 right-0 text-center text-gray-500 text-sm"></app-footer>
+</div>
+

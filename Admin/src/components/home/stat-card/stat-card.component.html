@@ -1,0 +1,19 @@
+
+<div class="w-full h-[250px] bg-[#2A2A2A] rounded-xl shadow-lg 
+      flex flex-1 flex-col items-center justify-start  pt-12 gap-3 text-white">
+  <h1 class="text-xl font-semibold mb-1">{{  title  }}</h1>
+
+
+    <div class="flex items-center gap-3">
+        <!-- Up Arrow -->
+        <span 
+        *ngIf="up"
+        class="text-green-400 text-lg">▲</span>
+    
+        <!-- Down Arrow -->
+        <span class="text-red-400 text-lg"
+        *ngIf="down"
+        >▼</span>
+    </div>
+    <p class="text-2xl font-bold mt-2">{{ value }}</p>
+</div>

@@ -1,0 +1,7 @@
+
+
+<div *ngIf="visible" class="toast" [ngClass]="type">
+<i class="fa" [ngClass]="iconClass"></i>
+<span class="message">{{ message }}</span>
+<button class="close" (click)="hide()">&times;</button>
+</div>

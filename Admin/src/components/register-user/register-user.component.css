@@ -1,0 +1,126 @@
+
+/* Page background */
+.user-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
+  padding: 20px;
+  margin: 20px;
+  background: #0f172a; /* Dark, solid background */
+}
+
+/* Modern Card Design */
+.user-card {
+    width: 420px;
+    padding: 30px;
+    background: #1e293b; /* Slightly lighter dark card background */
+    border-radius: 12px; /* Sharper corners */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    animation: fadeUp 0.6s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 40px;
+  color: #fff; /* White title text */
+  border-bottom: 2px solid #4f46e5; /* A subtle accent line */
+  padding-bottom: 15px;
+} 
+
+/* Floating input with icons */
+.input-group {
+  position: relative;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.input-group .icon {
+    position: absolute;
+    left: 0;
+    top: 10px;
+    color: #475569; /* Icon color */
+    font-size: 18px;
+    transition: 0.3s ease;
+    z-index: 10;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 10px 10px 30px; /* Added padding on the left for the icon */
+  border: none;
+  background: transparent;
+  border-bottom: 1px solid #475569; /* A simple, thin bottom border */
+  font-size: 15px;
+  outline: none;
+  color: #fff; /* White input text */
+} 
+
+.input-group input:focus,
+.input-group input:valid {
+    border-bottom-color: #6366f1; /* Highlight border on focus */
+}
+
+/* Animate the icon color on focus */
+.input-group input:focus ~ .icon,
+.input-group input:valid ~ .icon {
+    color: #6366f1;
+}
+
+.input-group label {
+  position: absolute;
+  left: 30px; /* Aligned with input text start */
+  top: 10px;
+  color: #94a3b8;
+  font-size: 15px;
+  pointer-events: none;
+  transition: 0.3s ease;
+}
+
+
+.input-group input:focus + label,
+.input-group input:valid + label {
+  top: -15px; /* Label moves up above the line */
+  left: 0; /* Label aligns with the icon space */
+  font-size: 12px;
+  color: #6366f1;
+}
+
+
+/* Liquid Button (Updated to fit dark theme) */
+.liquid-btn {
+  position: relative;
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  border-radius: 8px; /* Sharper button corners */
+  border: none;
+  background: #4f46e5; /* Solid color background */
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4); /* Glow effect */
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.liquid-btn:hover {
+    transform: translateY(-2px);
+    background: #6366f1; /* Slight color change on hover */
+}
+
+/* Removed the complex ::before and .liquid effects for this simpler, minimalist design */
+/* .liquid-btn span is the only part needed now for text positioning */
+.liquid-btn span {
+    position: relative;
+    z-index: 2;
+}
+
+/* Keyframes */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
